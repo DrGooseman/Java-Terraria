@@ -16,7 +16,9 @@ public class Tile extends JPanel {
     private int health;
     private int maxHealth;
 
-    public Tile(int tileType, int indexX, int indexY) {
+    private int tileSize;
+
+    public Tile(int tileType, int indexX, int indexY, int tileSize) {
         this.tileType = tileType;
         if (tileType == 1) maxHealth = 3;
         else maxHealth = 5;
@@ -24,13 +26,14 @@ public class Tile extends JPanel {
 
         this.indexX = indexX;
         this.indexY = indexY;
-        this.positionX = indexX * (World.getTileSize()) + (World.getTileSize()/2);
-        this.positionY = indexY * (World.getTileSize()) + (World.getTileSize()/2);
+        this.tileSize = tileSize;
+        this.positionX = indexX * tileSize + (tileSize / 2);
+        this.positionY = indexY * tileSize + (tileSize / 2);
     }
 
     public void paintComponent(Graphics g, int startX, int startY, int width, int height) {
-       // super.paintComponent(g);
-        int alpha = (int) (health/(float)maxHealth * 255);
+        // super.paintComponent(g);
+        int alpha = (int) (health / (float) maxHealth * 255);
 
         if (isHighlighted)
             g.setColor(Color.YELLOW);
@@ -47,19 +50,14 @@ public class Tile extends JPanel {
         else if (tileType == 5)
             g.setColor(new Color(255, 215, 0, alpha));
 
-        g.fillRect(startX-1, startY-1, width-2, height-2);
-
-
-
-
-
+        g.fillRect(startX - 1, startY - 1, width - 2, height - 2);
 
 
     }
 
-    public void setHighlighted(boolean isHighlighted){
+    public void setHighlighted(boolean isHighlighted) {
         if (isHighlighted)
-        this.isHighlighted = isHighlighted;
+            this.isHighlighted = isHighlighted;
     }
 
     public int getTileType() {
@@ -70,8 +68,19 @@ public class Tile extends JPanel {
         this.tileType = tileType;
     }
 
-    public int getTopPosition(){
-        return positionY - World.getTileSize()/2;
-}
+    public int getTopPosition() {
+        return positionY - tileSize / 2;
+    }
+
+    public void hit(int power) {
+        health -= power;
+        if (health < 0) health = 0;
+        if (health == 0)
+            destroy();
+    }
+
+    private void destroy() {
+        tileType = 0;
+    }
 
 }

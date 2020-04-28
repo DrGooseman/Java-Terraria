@@ -12,7 +12,7 @@ public class World extends JPanel {
     private int worldWidth = 200;
     private int worldHeight = 200;
 
-    private static int tileSize = 16;
+    private  int tileSize = 16;
     private int offSetX = worldWidth/2 * tileSize;
     private int offSetY = worldHeight/2 * tileSize;
 
@@ -39,7 +39,7 @@ public class World extends JPanel {
         super.paintComponent(g);
         offSetX = (int)trackedObject.getPosX();
         offSetY =(int) trackedObject.getPosY();
-       // System.out.println("paint world");
+
 //        g.setColor(Color.LIGHT_GRAY);
 //        g.fillRect(0, 0, worldWidth, worldHeight);
 
@@ -135,7 +135,7 @@ public class World extends JPanel {
                         tileType = 5;
             }
 
-                tiles[i][j] = new Tile(tileType, j, i);
+                tiles[i][j] = new Tile(tileType, j, i, tileSize);
             }
         }
     }
@@ -152,7 +152,9 @@ public class World extends JPanel {
         return tiles[y / tileSize][x / tileSize];
     }
 
-    public static int getTileSize(){
+    public int getTileSize(){
         return tileSize;
     }
+
+
 }

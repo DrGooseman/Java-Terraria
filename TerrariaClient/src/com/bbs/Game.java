@@ -2,13 +2,10 @@ package com.bbs;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import java.awt.image.BufferStrategy;
 
-public class Game extends JPanel implements KeyListener {
+public class Game extends JPanel implements KeyListener, MouseListener, MouseMotionListener  {
 
     private JFrame mainFrame;
     public static int screenWidth;
@@ -55,6 +52,8 @@ public class Game extends JPanel implements KeyListener {
         loop.start();
 
         addKeyListener(this);
+        addMouseListener(this);
+        addMouseMotionListener(this);
 
         setDoubleBuffered(true);
 //        new Timer(16, new ActionListener(){
@@ -144,6 +143,20 @@ public class Game extends JPanel implements KeyListener {
         player.updateState(delta);
     }
 
+
+
+
+//    public Point screenToWorldPosition(Point screenPosition)
+//    {
+//        Point worldPosition = new Point((int) (screenPosition.x - screenWidthCenter + player.getPosX()), (int)(screenPosition.y - screenHeightCenter + player.getPosY()));
+//
+//        return worldPosition;
+//    }
+
+
+
+
+
     @Override
     public void keyTyped(KeyEvent e) {
 
@@ -163,4 +176,41 @@ public class Game extends JPanel implements KeyListener {
         if (ch == 'a' || ch == 'w' || ch == 's'|| ch == 'd')
             player.press(ch, false);
     }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        player.mouseClicked(true);
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        player.mouseClicked(false);
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+       // Point point = screenToWorldPosition(e.getPoint());
+        player.mouseMoved(e.getPoint());
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+      //  Point point = screenToWorldPosition(e.getPoint());
+        player.mouseMoved(e.getPoint());
+    }
+
 }
