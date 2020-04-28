@@ -43,6 +43,9 @@ public class Game extends JPanel implements KeyListener {
         this.add(world);
         this.add(player);
 
+        setComponentZOrder(world, 1);
+        setComponentZOrder(player, 0);
+
         gameRunning = true;
         Thread loop = new Thread() {
             public void run() {
@@ -52,6 +55,8 @@ public class Game extends JPanel implements KeyListener {
         loop.start();
 
         addKeyListener(this);
+
+        setDoubleBuffered(true);
 //        new Timer(16, new ActionListener(){
 //            public void actionPerformed(ActionEvent e) {
 //              //  gameLoop();
@@ -115,22 +120,24 @@ public class Game extends JPanel implements KeyListener {
     private void render() {
        // Graphics g = this.getBu
      //   BufferStrategy buffer = mainFrame.getBufferStrategy();
-
-        // Get context from the JPanel we are going to draw to
-     //   Graphics g = buffer.getDrawGraphics();
-
-        // Start with clearing the drawing surface
-     //   g.setColor(Color.MAGENTA);
-       // g.fillRect(0, 0, screen.getWidth(), screen.getHeight());
-      //  g.dispose();
-
-     //   world.paintComponent(g);
-
-        // After we draw everything to the back buffer, we show that buffer
-      //  buffer.show();
-      //  invalidate();
-        world.repaint();
-        player.repaint();
+        //
+        //        // Get context from the JPanel we are going to draw to
+        //     //   Graphics g = buffer.getDrawGraphics();
+        //
+        //        // Start with clearing the drawing surface
+        //     //   g.setColor(Color.MAGENTA);
+        //       // g.fillRect(0, 0, screen.getWidth(), screen.getHeight());
+        //      //  g.dispose();
+        //
+        //     //   world.paintComponent(g);
+        //
+        //        // After we draw everything to the back buffer, we show that buffer
+        //      //  buffer.show();
+        //      //  invalidate();
+        revalidate();
+        repaint();
+      // world.repaint();
+      // player.repaint();
     }
 
     private void doGameUpdates(double delta) {

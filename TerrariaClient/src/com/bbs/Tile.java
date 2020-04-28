@@ -42,6 +42,11 @@ public class Tile extends JPanel {
         g.fillRect(startX-1, startY-1, width-2, height-2);
 
 
+
+
+
+
+
     }
 
     public void setHighlighted(boolean isHighlighted){

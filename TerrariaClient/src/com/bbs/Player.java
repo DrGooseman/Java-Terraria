@@ -36,9 +36,9 @@ public class Player  extends JPanel {
         System.out.println("player y " + posY);
     }
 
-
+@Override
     public void paintComponent(Graphics g) {
-      //  super.paintComponent(g);
+       //super.paintComponent(g);
         //draw player imageicon
 //        playerIcon = new ImageIcon("src/images/playerIcon.png");
 //        playerIcon.paintIcon(this, g, worldWidth, worldHeight);
