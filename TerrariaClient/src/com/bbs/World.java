@@ -36,7 +36,7 @@ public class World extends JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
-      //  super.paintComponent(g);
+        super.paintComponent(g);
         offSetX = (int)trackedObject.getPosX();
         offSetY =(int) trackedObject.getPosY();
        // System.out.println("paint world");
