@@ -35,7 +35,7 @@ public class Game extends JPanel implements KeyListener, MouseListener, MouseMot
         int tileSize = 32;
 
          world = new World(worldWidth, worldHeight, tileSize);
-         player = new Player(worldWidth * tileSize / 2, worldHeight * tileSize / 2, world);
+         player = new Player(worldWidth * tileSize / 2, worldHeight * tileSize / 2 - 20, world);
          world.focusOn(player);
         this.add(world);
         this.add(player);

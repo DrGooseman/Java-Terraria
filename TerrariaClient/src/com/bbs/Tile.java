@@ -71,6 +71,15 @@ public class Tile extends JPanel {
     public int getTopPosition() {
         return positionY - tileSize / 2;
     }
+    public int getBottomPosition() {
+        return positionY + tileSize / 2;
+    }
+    public int getRightPosition() {
+        return positionX + tileSize / 2;
+    }
+    public int getLeftPosition() {
+        return positionX - tileSize / 2;
+    }
 
     public void hit(int power) {
         health -= power;
@@ -81,6 +90,14 @@ public class Tile extends JPanel {
 
     private void destroy() {
         tileType = 0;
+    }
+
+    public int getIndexX() {
+        return indexX;
+    }
+
+    public int getIndexY() {
+        return indexY;
     }
 
 }

@@ -151,10 +151,39 @@ public class World extends JPanel {
     public Tile getTileAtIndex(int x, int y){
         return tiles[y / tileSize][x / tileSize];
     }
+    public Tile getTileAboveTile(Tile tile){
+        int aboveIndex = tile.getIndexY() - 1;
+        if (aboveIndex < 0)
+            return null;
+        return tiles[aboveIndex][tile.getIndexX()];
+    }
+    public Tile getTileBelowTile(Tile tile){
+        int aboveIndex = tile.getIndexY() + 1;
+        if (aboveIndex >= worldHeight)
+            return null;
+        return tiles[aboveIndex][tile.getIndexX()];
+    }
 
     public int getTileSize(){
         return tileSize;
     }
 
 
+    public boolean isSolidAtRange(int startXPos, int startYPos, int endXPos, int endYPos) {
+        int startXIndex = startXPos / tileSize;
+        int startYIndex = startYPos / tileSize;
+        int endXIndex = endXPos / tileSize;
+        int endYIndex = endYPos / tileSize;
+
+        if (startXIndex < 0 || startYIndex < 0 || endXIndex >= worldWidth || endYIndex >= worldHeight)
+            return true;
+
+        for (int i = startYIndex; i < endYIndex+1; i++){
+            for (int j = startXIndex; j < endXIndex+1; j++){
+                if (tiles[i][j].getTileType() != 0)
+                    return true;
+            }
+        }
+        return false;
+    }
 }
