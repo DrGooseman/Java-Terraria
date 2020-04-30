@@ -32,7 +32,7 @@ public class Tile extends JPanel {
     }
 
     public void paintComponent(Graphics g, int startX, int startY, int width, int height) {
-        // super.paintComponent(g);
+
         int alpha = (int) (health / (float) maxHealth * 255);
 
         if (isHighlighted)
@@ -51,8 +51,6 @@ public class Tile extends JPanel {
             g.setColor(new Color(255, 215, 0, alpha));
 
         g.fillRect(startX - 1, startY - 1, width - 2, height - 2);
-
-
     }
 
     public void setHighlighted(boolean isHighlighted) {

@@ -6,8 +6,6 @@ import java.awt.*;
 
 
 public class World extends JPanel {
-    private ImageIcon playerIcon;
-
 
     private int worldWidth = 200;
     private int worldHeight = 200;
@@ -31,7 +29,6 @@ public class World extends JPanel {
         offSetY = worldHeight/2 * tileSize;
 
         generateWorld();
-       // System.out.println("world created");
     }
 
     @Override
@@ -39,10 +36,6 @@ public class World extends JPanel {
         super.paintComponent(g);
         offSetX = (int)trackedObject.getPosX();
         offSetY =(int) trackedObject.getPosY();
-
-//        g.setColor(Color.LIGHT_GRAY);
-//        g.fillRect(0, 0, worldWidth, worldHeight);
-
 
         int startX = (offSetX - Game.screenWidthCenter)/ tileSize;
         if (startX < 0)
@@ -67,12 +60,6 @@ public class World extends JPanel {
                 tiles[i][j].paintComponent(g, j * tileSize - offSetX + Game.screenWidthCenter, i* tileSize  - offSetY + Game.screenHeightCenter,   tileSize, tileSize);
             }
         }
-//        for (int i = 0; i < tiles.length; i++){
-//            for (int j = 0; j < tiles[i].length; j++){
-//                tiles[i][j].paintComponent(g, j * tileSize - offSetX + Game.screenWidthCenter, i* tileSize  - offSetY + Game.screenHeightCenter,   tileSize, tileSize);
-//
-//            }
-//        }
     }
 
     private void generateWorld(){

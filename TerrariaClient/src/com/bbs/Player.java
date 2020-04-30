@@ -5,6 +5,8 @@ import java.awt.*;
 
 public class Player extends JPanel {
 
+   // private ImageIcon playerIcon;
+
     private float posX;
     private float posY;
 
@@ -35,7 +37,6 @@ public class Player extends JPanel {
     private Point mouseLocation;
 
     private World world;
-    private Tile[][] worldTiles;
 
 
     public Player(int posX, int posY, World world) {
@@ -47,18 +48,16 @@ public class Player extends JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
-        //super.paintComponent(g);
-        //draw player imageicon
+
 //        playerIcon = new ImageIcon("src/images/playerIcon.png");
 //        playerIcon.paintIcon(this, g, worldWidth, worldHeight);
-//System.out.println("paint player");
+
         g.setColor(Color.BLACK);
         g.fillRect(Game.screenWidthCenter - playerWidth / 2, Game.screenHeightCenter - playerHeight / 2, playerWidth, playerHeight);
         if (attackCooldownTimer > 0) {
             g.setColor(Color.RED);
             g.fillRect(Game.screenWidthCenter - playerWidth / 2, Game.screenHeightCenter - playerHeight / 2 - 4, (int) (playerWidth * (attackCooldownTimer / attackCooldown)), 4);
         }
-
     }
 
     public void press(char ch, boolean isPressed) {
@@ -106,18 +105,6 @@ public class Player extends JPanel {
     }
 
     public void calcPhysics(double delta) {
-//        world.getTileAtIndex(posX-playerWidthHalf, posY-playerHeightHalf).setHighlighted(true);
-//        world.getTileAtIndex(posX+playerWidthHalf, posY-playerHeightHalf).setHighlighted(true);
-//        world.getTileAtIndex(posX-playerWidthHalf, posY+playerHeightHalf).setHighlighted(true);
-//        world.getTileAtIndex(posX+playerWidthHalf, posY+playerHeightHalf).setHighlighted(true);
-//        float leftOverlap = 0;
-////        float rightOverlap = 0;
-////
-////        if (movedLeftOrRight) {
-////             leftOverlap = getLeftOverlap();
-////             rightOverlap = getRightOverlap();
-////        }
-
 
         if (falling) {
             if (fallSpeed > 0 && isOverSolidGround()) {
@@ -134,15 +121,6 @@ public class Player extends JPanel {
             }
         }
 
-
-//        if (movedLeftOrRight) {
-//            float leftOverlap = getLeftOverlap();
-//            float rightOverlap = getRightOverlap();
-//            //   if (!(leftOverlap != 0 && rightOverlap != 0)) {
-//            posX += leftOverlap;
-//            posX -= rightOverlap;
-//            // }
-//        }
         if (movedLeft) {
             posX += getLeftOverlap();
             movedLeft = false;
@@ -175,7 +153,7 @@ public class Player extends JPanel {
 
     private boolean isOverSolidGround() {
 
-        Tile testTile = world.getTileAtIndex((int) posX - playerWidthHalf, (int) posY + playerHeightHalf + 1);
+        Tile testTile = world.getTileAtIndex((int) posX - playerWidthHalf, (int) posY + playerHeightHalf);
         if (testTile.getTileType() != 0 && world.getTileAboveTile(testTile).getTileType() == 0) {
             float topDistance = (posY + playerHeightHalf) - testTile.getTopPosition();
             float sideDistance = testTile.getRightPosition() - (posX - playerWidthHalf);
@@ -184,7 +162,7 @@ public class Player extends JPanel {
                 return true;
         }
 
-        testTile = world.getTileAtIndex((int) posX + playerWidthHalf, (int) posY + playerHeightHalf + 1);
+        testTile = world.getTileAtIndex((int) posX + playerWidthHalf, (int) posY + playerHeightHalf);
         if (testTile.getTileType() != 0 && world.getTileAboveTile(testTile).getTileType() == 0) {
             float topDistance = (posY + playerHeightHalf) - testTile.getTopPosition();
             float sideDistance = (posX + playerWidthHalf) - testTile.getLeftPosition();
@@ -197,7 +175,7 @@ public class Player extends JPanel {
 
     private boolean isUnderSolidGround() {
 
-        Tile testTile = world.getTileAtIndex((int) posX - playerWidthHalf, (int) posY - playerHeightHalf - 1);
+        Tile testTile = world.getTileAtIndex((int) posX - playerWidthHalf, (int) posY - playerHeightHalf );
         if (testTile.getTileType() != 0 && world.getTileBelowTile(testTile).getTileType() == 0) {
             float topDistance = (posY - playerHeightHalf) - testTile.getBottomPosition();
             float sideDistance = testTile.getRightPosition() - (posX - playerWidthHalf);
@@ -206,7 +184,7 @@ public class Player extends JPanel {
                 return true;
         }
 
-        testTile = world.getTileAtIndex((int) posX + playerWidthHalf, (int) posY - playerHeightHalf - 1);
+        testTile = world.getTileAtIndex((int) posX + playerWidthHalf, (int) posY - playerHeightHalf);
         if (testTile.getTileType() != 0 && world.getTileBelowTile(testTile).getTileType() == 0) {
             float topDistance = (posY - playerHeightHalf) - testTile.getBottomPosition();
             float sideDistance = (posX + playerWidthHalf) - testTile.getLeftPosition();
@@ -218,17 +196,9 @@ public class Player extends JPanel {
     }
 
     private float getGroundOverlap() {
-        //  System.out.println((posY+playerHeightHalf) - world.getTileAtIndex((int)posX-playerWidthHalf, (int)posY+playerHeightHalf).getTopPosition());
-        //System.out.println((posY+playerHeightHalf) - (int)(posY+playerHeightHalf));
         return (posY + playerHeightHalf) - world.getTileAtIndex((int) posX - playerWidthHalf, (int) posY + playerHeightHalf).getTopPosition();
     }
 
-    //    private boolean isLeftSolid(){
-//        return world.isSolidAtRange((int) posX - playerWidthHalf, (int) posY - playerHeightHalf, (int) posX - playerWidthHalf, (int) posY + playerHeightHalf);
-//    }
-//private boolean isRightSolid(){
-//    return world.isSolidAtRange((int) posX + playerWidthHalf, (int) posY - playerHeightHalf, (int) posX + playerWidthHalf, (int) posY + playerHeightHalf);
-//}
     private float getLeftOverlap() {
         if (world.isSolidAtRange((int) posX - playerWidthHalf, (int) posY - playerHeightHalf, (int) posX - playerWidthHalf, (int) posY + playerHeightHalf))
             return world.getTileAtIndex((int) posX - playerWidthHalf, (int) posY).getRightPosition() - (posX - playerWidthHalf);
@@ -243,11 +213,10 @@ public class Player extends JPanel {
             return 0;
     }
 
-
     //For now, the player only has a pickaxe. Update later to use other items.
     public void attack(Point point) {
 
-        world.getTileAtIndex(point.x, point.y).hit(3);
+        world.getTileAtIndex(point.x, point.y).hit(1);
 
         attackCooldownTimer += attackCooldown;
     }

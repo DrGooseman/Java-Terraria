@@ -75,39 +75,27 @@ public class Game extends JPanel implements KeyListener, MouseListener, MouseMot
         final int TARGET_FPS = 60;
         final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
 
-        // keep looping round til the game ends
         while (gameRunning) {
-            // work out how long its been since the last update, this
-            // will be used to calculate how far the entities should
-            // move this loop
+
             long now = System.nanoTime();
             long updateLength = now - lastLoopTime;
             lastLoopTime = now;
             double delta = updateLength / ((double) OPTIMAL_TIME);
 
-            // update the frame counter
             lastFpsTime += updateLength;
             fps++;
 
-            // update our FPS counter if a second has passed since
-            // we last recorded
+
             if (lastFpsTime >= 1000000000) {
               //  System.out.println("(FPS: " + fps + ")");
                 lastFpsTime = 0;
                 fps = 0;
             }
 
-            // update the game logic
             doGameUpdates(delta);
 
-            // draw everyting
             render();
 
-            // we want each frame to take 10 milliseconds, to do this
-            // we've recorded when we started the frame. We add 10 milliseconds
-            // to this and then factor in the current time to give
-            // us our final value to wait for
-            // remember this is in ms, whereas our lastLoopTime etc. vars are in ns.
             try {
                 Thread.sleep((lastLoopTime - System.nanoTime() + OPTIMAL_TIME) / 1000000);
             } catch (InterruptedException e) {
@@ -117,45 +105,13 @@ public class Game extends JPanel implements KeyListener, MouseListener, MouseMot
     }
 
     private void render() {
-       // Graphics g = this.getBu
-     //   BufferStrategy buffer = mainFrame.getBufferStrategy();
-        //
-        //        // Get context from the JPanel we are going to draw to
-        //     //   Graphics g = buffer.getDrawGraphics();
-        //
-        //        // Start with clearing the drawing surface
-        //     //   g.setColor(Color.MAGENTA);
-        //       // g.fillRect(0, 0, screen.getWidth(), screen.getHeight());
-        //      //  g.dispose();
-        //
-        //     //   world.paintComponent(g);
-        //
-        //        // After we draw everything to the back buffer, we show that buffer
-        //      //  buffer.show();
-        //      //  invalidate();
         revalidate();
         repaint();
-      // world.repaint();
-      // player.repaint();
     }
 
     private void doGameUpdates(double delta) {
         player.updateState(delta);
     }
-
-
-
-
-//    public Point screenToWorldPosition(Point screenPosition)
-//    {
-//        Point worldPosition = new Point((int) (screenPosition.x - screenWidthCenter + player.getPosX()), (int)(screenPosition.y - screenHeightCenter + player.getPosY()));
-//
-//        return worldPosition;
-//    }
-
-
-
-
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -165,7 +121,6 @@ public class Game extends JPanel implements KeyListener, MouseListener, MouseMot
     @Override
     public void keyPressed(KeyEvent e) {
         char ch = e.getKeyChar();
-      //  System.out.println(e.getKeyChar());
         if (ch == 'a' || ch == 'w' || ch == 's'|| ch == 'd'|| ch == ' ')
             player.press(ch, true);
     }
@@ -203,13 +158,11 @@ public class Game extends JPanel implements KeyListener, MouseListener, MouseMot
 
     @Override
     public void mouseDragged(MouseEvent e) {
-       // Point point = screenToWorldPosition(e.getPoint());
         player.mouseMoved(e.getPoint());
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-      //  Point point = screenToWorldPosition(e.getPoint());
         player.mouseMoved(e.getPoint());
     }
 
